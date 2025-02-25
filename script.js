@@ -1,33 +1,31 @@
-// ✅ Load Supabase Client
+// ✅ Ensure Supabase is properly loaded before using it
+if (typeof supabase === "undefined") {
+    console.error("❌ Supabase library not loaded. Make sure to include it in index.html.");
+}
+
+// ✅ Initialize Supabase Client
 const supabaseUrl = "https://ybtupotxytuoattvdnrk.supabase.co";
 const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlidHVwb3R4eXR1b2F0dHZkbnJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0NzYwMDQsImV4cCI6MjA1NjA1MjAwNH0.cYb-OOtjPJiPNUOCAH032Eql1bsXnfzWtw4t831PlxQ";
 
 const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
 
-// ✅ Fetch Data and Display in Table (Sorted by Integrations - Highest to Lowest)
+// ✅ Fetch Data and Display in Table
 async function fetchIncentiveData() {
-    console.log("Fetching sorted data from Supabase...");
+    console.log("Fetching data from Supabase...");
 
-    let { data, error } = await fetch(`${supabaseUrl}/rest/v1/us_incentive?select=*&order=integrations.desc`, {
-        method: "GET",
-        headers: {
-            "apikey": supabaseAnonKey,
-            "Authorization": `Bearer ${supabaseAnonKey}`,
-            "Content-Type": "application/json"
-        }
-    }).then(res => res.json());
+    let { data, error } = await supabase.from("us_incentive").select("*").order("integrations", { ascending: false });
 
-    if (!data || error) {
-        console.error("❌ Error fetching sorted data:", error || "No data received.");
+    if (error) {
+        console.error("❌ Error fetching data:", error);
         return;
     }
 
-    console.log("✅ Sorted Fetched Data:", data);
+    console.log("✅ Fetched Data:", data);
 
     let tableBody = document.querySelector("#incentiveTable tbody");
     tableBody.innerHTML = "";
 
-    if (data.length === 0) {
+    if (!data || data.length === 0) {
         tableBody.innerHTML = "<tr><td colspan='4'>No data found in Supabase.</td></tr>";
         return;
     }
@@ -46,6 +44,7 @@ async function fetchIncentiveData() {
     });
 }
 
-// ✅ Fetch new sorted data every 30 seconds
+// ✅ Fetch new data every 30 seconds
 setInterval(fetchIncentiveData, 30000);
 fetchIncentiveData();
+
