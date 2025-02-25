@@ -13,17 +13,17 @@ async function fetchIncentiveData() {
     let { data, error } = await supabase.from("us_incentive").select("*");
 
     if (error) {
-        console.error("Error fetching data:", error);
+        console.error("❌ Error fetching data:", error);
         return;
     }
 
-    console.log("Fetched Data:", data); // ✅ Logs data in the browser console
+    console.log("✅ Fetched Data:", data);
 
     let tableBody = document.querySelector("#incentiveTable tbody");
     tableBody.innerHTML = "";
 
-    if (data.length === 0) {
-        tableBody.innerHTML = "<tr><td colspan='4'>No data found.</td></tr>";
+    if (!data || data.length === 0) {
+        tableBody.innerHTML = "<tr><td colspan='4'>No data found in Supabase.</td></tr>";
         return;
     }
 
@@ -44,3 +44,4 @@ async function fetchIncentiveData() {
 // Fetch new data every 30 seconds
 setInterval(fetchIncentiveData, 30000);
 fetchIncentiveData();
+
