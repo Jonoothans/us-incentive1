@@ -10,7 +10,10 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 async function fetchIncentiveData() {
     console.log("Fetching data from Supabase...");
 
-    let { data, error } = await supabase.from("us_incentive").select("*");
+    let { data, error } = await supabase
+        .from("us_incentive")
+        .select("*")
+        .order("integrations", { ascending: false }); // ✅ Sorting directly from Supabase
 
     if (error) {
         console.error("❌ Error fetching data:", error);
@@ -18,9 +21,6 @@ async function fetchIncentiveData() {
     }
 
     console.log("✅ Fetched Data:", data);
-
-    // ✅ Sort by Integrations (Highest to Lowest)
-    data.sort((a, b) => b.integrations - a.integrations);
 
     let tableBody = document.querySelector("#incentiveTable tbody");
     tableBody.innerHTML = "";
@@ -43,6 +43,10 @@ async function fetchIncentiveData() {
         tableBody.appendChild(tr);
     });
 }
+
+// ✅ Fetch new data every 30 seconds
+setInterval(fetchIncentiveData, 30000);
+fetchIncentiveData();
 
 // ✅ Fetch new data every 30 seconds
 setInterval(fetchIncentiveData, 30000);
