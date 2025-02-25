@@ -1,23 +1,25 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-// Connect to Supabase
+// ✅ Connect to Supabase with API Key
 const supabaseUrl = "https://ybtupotxytuoattvdnrk.supabase.co";
 const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlidHVwb3R4eXR1b2F0dHZkbnJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0NzYwMDQsImV4cCI6MjA1NjA1MjAwNH0.cYb-OOtjPJiPNUOCAH032Eql1bsXnfzWtw4t831PlxQ";
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// Fetch Data and Display in Table
+// ✅ Fetch Data and Display in Table
 async function fetchIncentiveData() {
     console.log("Fetching data from Supabase...");
 
-    let { data, error } = await supabase.from("us_incentive").select("*");
+    let { data, error } = await supabase
+        .from("us_incentive")
+        .select("*");
 
     if (error) {
         console.error("❌ Error fetching data:", error);
         return;
     }
 
-    console.log("✅ Fetched Data:", data);
+    console.log("✅ Fetched Data:", data); // ✅ Logs fetched data in browser console
 
     let tableBody = document.querySelector("#incentiveTable tbody");
     tableBody.innerHTML = "";
@@ -41,7 +43,6 @@ async function fetchIncentiveData() {
     });
 }
 
-// Fetch new data every 30 seconds
+// ✅ Fetch new data every 30 seconds
 setInterval(fetchIncentiveData, 30000);
 fetchIncentiveData();
-
