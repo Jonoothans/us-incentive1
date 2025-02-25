@@ -6,20 +6,21 @@ const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// ✅ Fetch Data and Display in Table
+// ✅ Fetch Data and Display in Table (Sorted by Integrations)
 async function fetchIncentiveData() {
     console.log("Fetching data from Supabase...");
 
-    let { data, error } = await supabase
-        .from("us_incentive")
-        .select("*");
+    let { data, error } = await supabase.from("us_incentive").select("*");
 
     if (error) {
         console.error("❌ Error fetching data:", error);
         return;
     }
 
-    console.log("✅ Fetched Data:", data); // ✅ Logs fetched data in browser console
+    console.log("✅ Fetched Data:", data);
+
+    // ✅ Sort by Integrations (Highest to Lowest)
+    data.sort((a, b) => b.integrations - a.integrations);
 
     let tableBody = document.querySelector("#incentiveTable tbody");
     tableBody.innerHTML = "";
