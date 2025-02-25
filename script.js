@@ -8,7 +8,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Fetch Data and Display in Table
 async function fetchIncentiveData() {
-    let { data, error } = await supabase.from("us-incentive").select("*");
+    let { data, error } = await supabase.from("us_incentive").select("*");
 
     if (error) {
         console.error("Error fetching data:", error);
