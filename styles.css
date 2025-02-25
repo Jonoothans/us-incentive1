@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap');
+
 body {
-    font-family: Poppins, sans-serif;
+    font-family: 'Outfit', sans-serif;
     text-align: center;
     background-color: #f4f4f4;
     margin: 0;
 }
+
 
 header {
     background-color: #003366; /* Dark Blue */
