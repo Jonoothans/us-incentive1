@@ -8,6 +8,8 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Fetch Data and Display in Table
 async function fetchIncentiveData() {
+    console.log("Fetching data from Supabase...");
+
     let { data, error } = await supabase.from("us_incentive").select("*");
 
     if (error) {
@@ -15,17 +17,24 @@ async function fetchIncentiveData() {
         return;
     }
 
+    console.log("Fetched Data:", data); // ✅ Logs data in the browser console
+
     let tableBody = document.querySelector("#incentiveTable tbody");
     tableBody.innerHTML = "";
+
+    if (data.length === 0) {
+        tableBody.innerHTML = "<tr><td colspan='4'>No data found.</td></tr>";
+        return;
+    }
 
     data.forEach((row) => {
         let tr = document.createElement("tr");
 
         tr.innerHTML = `
-            <td>${row.name}</td>
-            <td>${row.integrations}</td>
-            <td>${row.graduations}</td>
-            <td>${row.points}</td>
+            <td>${row.name || "N/A"}</td>
+            <td>${row.integrations || "0"}</td>
+            <td>${row.graduations || "0"}</td>
+            <td>${row.points || "0"}</td>
         `;
 
         tableBody.appendChild(tr);
