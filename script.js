@@ -1,4 +1,4 @@
-// ✅ Ensure Supabase is properly loaded before using it
+// ✅ Ensure Supabase is loaded before using it
 if (typeof supabase === "undefined") {
     console.error("❌ Supabase library not loaded. Make sure to include it in index.html.");
 }
@@ -9,11 +9,14 @@ const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 
 const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
 
-// ✅ Fetch Data and Display in Table
+// ✅ Fetch Data and Display in Table (Sorted by Integrations)
 async function fetchIncentiveData() {
     console.log("Fetching data from Supabase...");
 
-    let { data, error } = await supabase.from("us_incentive").select("*").order("integrations", { ascending: false });
+    let { data, error } = await supabase
+        .from("us_incentive")
+        .select("*")
+        .order("integrations", { ascending: false });
 
     if (error) {
         console.error("❌ Error fetching data:", error);
@@ -47,4 +50,5 @@ async function fetchIncentiveData() {
 // ✅ Fetch new data every 30 seconds
 setInterval(fetchIncentiveData, 30000);
 fetchIncentiveData();
+
 
