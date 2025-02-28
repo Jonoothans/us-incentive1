@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,7 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: white;
+            background-color: white; /* Ensures the rest of the page has a white background */
             text-align: center;
         }
 
@@ -22,7 +22,7 @@
             background: url('https://raw.githubusercontent.com/Jonoothans/us_incentive1/main/assets/sunrise.png?v=1') no-repeat center;
             background-size: cover;
             width: 100%;
-            height: 200px;
+            height: 200px; /* Ensures it doesn't expand beyond the header */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -35,7 +35,7 @@
             font-size: 32px;
             font-weight: 600;
             margin: 0;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Adds shadow for better readability */
         }
 
         /* Table Styling */
@@ -49,7 +49,7 @@
 
         /* Table Header */
         th {
-            background-color: #002855;
+            background-color: #002855; /* Dark Blue */
             color: white;
             padding: 12px;
             text-align: center;
@@ -93,7 +93,7 @@
     <script>
         const SUPABASE_URL = "https://ybtupotxytuoattvdnrk.supabase.co";
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlidHVwb3R4eXR1b2F0dHZkbnJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0NzYwMDQsImV4cCI6MjA1NjA1MjAwNH0.cYb-OOtjPJiPNUOCAH032Eql1bsXnfzWtw4t831PlxQ";
-        const TABLE_NAME = "us_incentive";
+        const TABLE_NAME = "us_incentive"; // ✅ Changed from "apac_incentive" to "us_incentive"
         const API_URL = `${SUPABASE_URL}/rest/v1/${TABLE_NAME}`;
 
         async function fetchTableData() {
@@ -113,36 +113,40 @@
                     const tableHead = document.getElementById("table-head");
                     const tableBody = document.getElementById("table-body");
 
-                    // Ensure correct column order: Name, Integrations, 50 TXN, CSAT, Points
-                    const columnOrder = ["Name", "Integrations", "50 TXN", "CSAT", "Points"];
+                    // Ensure "Points" column exists
+                    if (!("Points" in data[0])) {
+                        console.error("⚠️ 'Points' column not found in data. Check Supabase table structure.");
+                        return;
+                    }
 
-                    // Sort data by "Points" in descending order
+                    // Convert "Points" to numbers & sort in descending order
                     data.forEach(row => {
                         row.Points = Number(row.Points) || 0;
                     });
+
                     data.sort((a, b) => b.Points - a.Points);
 
                     // Generate table headers dynamically
                     tableHead.innerHTML = "";
-                    columnOrder.forEach(col => {
+                    Object.keys(data[0]).forEach(col => {
                         let th = document.createElement("th");
                         th.textContent = col;
                         tableHead.appendChild(th);
                     });
 
-                    // Generate table rows dynamically with correct column order
+                    // Generate table rows dynamically
                     tableBody.innerHTML = "";
                     data.forEach(row => {
                         let tr = document.createElement("tr");
-                        columnOrder.forEach(col => {
+                        Object.values(row).forEach(value => {
                             let td = document.createElement("td");
-                            td.textContent = row[col] || ""; // Ensure columns exist
+                            td.textContent = value;
                             tr.appendChild(td);
                         });
                         tableBody.appendChild(tr);
                     });
 
-                    console.log("✅ Data sorted successfully with correct column order!");
+                    console.log("✅ Data sorted successfully!");
                 } else {
                     console.error("⚠️ No data found in Supabase table.");
                 }
@@ -162,3 +166,4 @@
 
 </body>
 </html>
+
