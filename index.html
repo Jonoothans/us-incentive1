@@ -13,19 +13,16 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: white; /* Ensures the rest of the page has a white background */
+            background-color: white;
             text-align: center;
         }
 
         /* Header Section */
         header {
-  background: url('https://raw.githubusercontent.com/Jonoothans/us-incentive1/main/assets/sunrise.png?v=1') no-repeat center;
-
-
-
+            background: url('https://raw.githubusercontent.com/Jonoothans/us-incentive1/main/assets/sunrise.png?v=1') no-repeat center;
             background-size: cover;
             width: 100%;
-            height: 200px; /* Ensures it doesn't expand beyond the header */
+            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -38,7 +35,7 @@
             font-size: 32px;
             font-weight: 600;
             margin: 0;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Adds shadow for better readability */
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
         }
 
         /* Table Styling */
@@ -50,9 +47,8 @@
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        /* Table Header */
         th {
-            background-color: #002855; /* Dark Blue */
+            background-color: #002855;
             color: white;
             padding: 12px;
             text-align: center;
@@ -60,7 +56,6 @@
             font-weight: 600;
         }
 
-        /* Table Cells */
         td {
             padding: 12px;
             border: 1px solid #ddd;
@@ -68,9 +63,34 @@
             font-size: 16px;
         }
 
-        /* Alternate Row Colors */
         tr:nth-child(even) {
             background-color: #f8f8f8;
+        }
+
+        /* Conditional Formatting */
+        tr.gold td {
+            background-color: #ffd700 !important;
+            font-weight: 600;
+        }
+
+        tr.silver td {
+            background-color: #c0c0c0 !important;
+            font-weight: 600;
+        }
+
+        tr.bronze td {
+            background-color: #cd7f32 !important;
+            font-weight: 600;
+        }
+
+        tr.highlight td {
+            box-shadow: inset 0 0 10px #4CAF50;
+            font-weight: 500;
+        }
+
+        tr.zero-points td {
+            background-color: #f0f0f0 !important;
+            color: #999;
         }
     </style>
 </head>
@@ -96,7 +116,7 @@
     <script>
         const SUPABASE_URL = "https://ybtupotxytuoattvdnrk.supabase.co";
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlidHVwb3R4eXR1b2F0dHZkbnJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0NzYwMDQsImV4cCI6MjA1NjA1MjAwNH0.cYb-OOtjPJiPNUOCAH032Eql1bsXnfzWtw4t831PlxQ";
-        const TABLE_NAME = "us_incentive"; // ✅ Changed from "apac_incentive" to "us_incentive"
+        const TABLE_NAME = "us_incentive";
         const API_URL = `${SUPABASE_URL}/rest/v1/${TABLE_NAME}`;
 
         async function fetchTableData() {
@@ -122,14 +142,14 @@
                         return;
                     }
 
-                    // Convert "Points" to numbers & sort in descending order
+                    // Convert "Points" to numbers & sort
                     data.forEach(row => {
                         row.Points = Number(row.Points) || 0;
                     });
 
                     data.sort((a, b) => b.Points - a.Points);
 
-                    // Generate table headers dynamically
+                    // Table Headers
                     tableHead.innerHTML = "";
                     Object.keys(data[0]).forEach(col => {
                         let th = document.createElement("th");
@@ -137,19 +157,27 @@
                         tableHead.appendChild(th);
                     });
 
-                    // Generate table rows dynamically
+                    // Table Rows
                     tableBody.innerHTML = "";
-                    data.forEach(row => {
+                    data.forEach((row, index) => {
                         let tr = document.createElement("tr");
+
+                        if (index === 0) tr.classList.add("gold");
+                        else if (index === 1) tr.classList.add("silver");
+                        else if (index === 2) tr.classList.add("bronze");
+                        else if (row.Points > 0) tr.classList.add("highlight");
+                        else tr.classList.add("zero-points");
+
                         Object.values(row).forEach(value => {
                             let td = document.createElement("td");
                             td.textContent = value;
                             tr.appendChild(td);
                         });
+
                         tableBody.appendChild(tr);
                     });
 
-                    console.log("✅ Data sorted successfully!");
+                    console.log("✅ Data loaded and formatted");
                 } else {
                     console.error("⚠️ No data found in Supabase table.");
                 }
@@ -158,10 +186,9 @@
             }
         }
 
-        // Fetch data immediately when the page loads
         fetchTableData();
 
-        // Auto-refresh the page every 10 minutes
+        // Optional: auto-refresh every 10 mins
         setInterval(() => {
             location.reload();
         }, 600000);
@@ -169,4 +196,3 @@
 
 </body>
 </html>
-
