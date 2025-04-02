@@ -1,198 +1,180 @@
 <!DOCTYPE html> 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       
-    <!-- Poppins Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Poppins Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-    <style>
-        /* General Styles */
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: white;
-            text-align: center;
-        }
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: white;
+      text-align: center;
+    }
 
-        /* Header Section */
-        header {
-            background: url('https://raw.githubusercontent.com/Jonoothans/us-incentive1/main/assets/sunrise.png?v=1') no-repeat center;
-            background-size: cover;
-            width: 100%;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
-        }
+    header {
+      background: url('https://raw.githubusercontent.com/Jonoothans/us-incentive1/main/assets/sunrise.png?v=1') no-repeat center;
+      background-size: cover;
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+    }
 
-        /* Header Text */
-        h1 {
-            font-size: 32px;
-            font-weight: 600;
-            margin: 0;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-        }
+    h1 {
+      font-size: 32px;
+      font-weight: 600;
+      margin: 0;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    }
 
-        /* Table Styling */
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            background: white;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-        th {
-            background-color: #002855;
-            color: white;
-            padding: 12px;
-            text-align: center;
-            font-size: 18px;
-            font-weight: 600;
-        }
+    th {
+      background-color: #002855;
+      color: white;
+      padding: 12px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+    }
 
-        td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: center;
-            font-size: 16px;
-        }
+    td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+      font-size: 16px;
+    }
 
-        tr:nth-child(even) {
-            background-color: #f8f8f8;
-        }
+    tr:nth-child(even) {
+      background-color: #f8f8f8;
+    }
 
-        /* Conditional Formatting */
-        tr.gold td {
-            background-color: #ffd700 !important;
-            font-weight: 600;
-        }
+    /* Conditional Formatting */
+    tr.gold td {
+      background-color: #ffd700 !important;
+      font-weight: 600;
+    }
 
-        tr.silver td {
-            background-color: #c0c0c0 !important;
-            font-weight: 600;
-        }
+    tr.silver td {
+      background-color: #c0c0c0 !important;
+      font-weight: 600;
+    }
 
-        tr.bronze td {
-            background-color: #cd7f32 !important;
-            font-weight: 600;
-        }
+    tr.bronze td {
+      background-color: #cd7f32 !important;
+      font-weight: 600;
+    }
 
-        tr.highlight td {
-            box-shadow: inset 0 0 10px #4CAF50;
-            font-weight: 500;
-        }
+    tr.highlight td {
+      box-shadow: inset 0 0 10px #4CAF50;
+      font-weight: 500;
+    }
 
-        tr.zero-points td {
-            background-color: #f0f0f0 !important;
-            color: #999;
-        }
-    </style>
+    tr.zero-points td {
+      background-color: #f0f0f0 !important;
+      color: #999;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Header Section -->
-    <header>
-        <h1>US Implementation Incentive</h1>
-    </header>
+  <header>
+    <h1>US Implementation Incentive</h1>
+  </header>
 
-    <!-- Leaderboard Table -->
-    <table id="data-table">
-        <thead>
-            <tr id="table-head">
-                <!-- Headers will be inserted dynamically -->
-            </tr>
-        </thead>
-        <tbody id="table-body">
-            <!-- Data will be inserted dynamically -->
-        </tbody>
-    </table>
+  <table id="data-table">
+    <thead>
+      <tr id="table-head"></tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+  </table>
 
-    <script>
-        const SUPABASE_URL = "https://ybtupotxytuoattvdnrk.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlidHVwb3R4eXR1b2F0dHZkbnJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0NzYwMDQsImV4cCI6MjA1NjA1MjAwNH0.cYb-OOtjPJiPNUOCAH032Eql1bsXnfzWtw4t831PlxQ";
-        const TABLE_NAME = "us_incentive";
-        const API_URL = `${SUPABASE_URL}/rest/v1/${TABLE_NAME}`;
+  <script>
+    const SUPABASE_URL = "https://ybtupotxytuoattvdnrk.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlidHVwb3R4eXR1b2F0dHZkbnJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0NzYwMDQsImV4cCI6MjA1NjA1MjAwNH0.cYb-OOtjPJiPNUOCAH032Eql1bsXnfzWtw4t831PlxQ";
+    const TABLE_NAME = "us_incentive";
+    const API_URL = `${SUPABASE_URL}/rest/v1/${TABLE_NAME}`;
 
-        async function fetchTableData() {
-            try {
-                const response = await fetch(API_URL, {
-                    method: "GET",
-                    headers: {
-                        "apikey": SUPABASE_KEY,
-                        "Authorization": `Bearer ${SUPABASE_KEY}`,
-                        "Content-Type": "application/json"
-                    }
-                });
+    // Desired column order
+    const columnOrder = ["Integrations", "50 TXN", "CSAT", "Points", "Training Completion"];
 
-                let data = await response.json();
-                
-                if (data.length > 0) {
-                    const tableHead = document.getElementById("table-head");
-                    const tableBody = document.getElementById("table-body");
+    async function fetchTableData() {
+      try {
+        const response = await fetch(API_URL, {
+          method: "GET",
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": `Bearer ${SUPABASE_KEY}`,
+            "Content-Type": "application/json"
+          }
+        });
 
-                    // Ensure "Points" column exists
-                    if (!("Points" in data[0])) {
-                        console.error("⚠️ 'Points' column not found in data. Check Supabase table structure.");
-                        return;
-                    }
+        let data = await response.json();
 
-                    // Convert "Points" to numbers & sort
-                    data.forEach(row => {
-                        row.Points = Number(row.Points) || 0;
-                    });
+        if (data.length > 0) {
+          const tableHead = document.getElementById("table-head");
+          const tableBody = document.getElementById("table-body");
 
-                    data.sort((a, b) => b.Points - a.Points);
+          // Convert points to numbers
+          data.forEach(row => {
+            row.Points = Number(row.Points) || 0;
+          });
 
-                    // Table Headers
-                    tableHead.innerHTML = "";
-                    Object.keys(data[0]).forEach(col => {
-                        let th = document.createElement("th");
-                        th.textContent = col;
-                        tableHead.appendChild(th);
-                    });
+          data.sort((a, b) => b.Points - a.Points);
 
-                    // Table Rows
-                    tableBody.innerHTML = "";
-                    data.forEach((row, index) => {
-                        let tr = document.createElement("tr");
+          // Create headers in specified order
+          tableHead.innerHTML = "";
+          columnOrder.forEach(col => {
+            let th = document.createElement("th");
+            th.textContent = col;
+            tableHead.appendChild(th);
+          });
 
-                        if (index === 0) tr.classList.add("gold");
-                        else if (index === 1) tr.classList.add("silver");
-                        else if (index === 2) tr.classList.add("bronze");
-                        else if (row.Points > 0) tr.classList.add("highlight");
-                        else tr.classList.add("zero-points");
+          // Create table rows
+          tableBody.innerHTML = "";
+          data.forEach((row, index) => {
+            let tr = document.createElement("tr");
 
-                        Object.values(row).forEach(value => {
-                            let td = document.createElement("td");
-                            td.textContent = value;
-                            tr.appendChild(td);
-                        });
+            if (index === 0) tr.classList.add("gold");
+            else if (index === 1) tr.classList.add("silver");
+            else if (index === 2) tr.classList.add("bronze");
+            else if (row.Points > 0) tr.classList.add("highlight");
+            else tr.classList.add("zero-points");
 
-                        tableBody.appendChild(tr);
-                    });
+            columnOrder.forEach(col => {
+              let td = document.createElement("td");
+              td.textContent = row[col] !== undefined ? row[col] : "";
+              tr.appendChild(td);
+            });
 
-                    console.log("✅ Data loaded and formatted");
-                } else {
-                    console.error("⚠️ No data found in Supabase table.");
-                }
-            } catch (error) {
-                console.error("❌ Error fetching data:", error);
-            }
+            tableBody.appendChild(tr);
+          });
+
+        } else {
+          console.error("⚠️ No data found in Supabase table.");
         }
+      } catch (error) {
+        console.error("❌ Error fetching data:", error);
+      }
+    }
 
-        fetchTableData();
-
-        // Optional: auto-refresh every 10 mins
-        setInterval(() => {
-            location.reload();
-        }, 600000);
-    </script>
+    fetchTableData();
+    setInterval(() => location.reload(), 600000); // refresh every 10 mins
+  </script>
 
 </body>
 </html>
