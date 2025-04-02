@@ -79,8 +79,8 @@
       font-weight: 600;
     }
 
+    /* Removed the green box-shadow from .highlight */
     tr.highlight td {
-      box-shadow: inset 0 0 10px #4CAF50;
       font-weight: 500;
     }
 
@@ -109,7 +109,7 @@
     const TABLE_NAME = "us_incentive";
     const API_URL = `${SUPABASE_URL}/rest/v1/${TABLE_NAME}`;
 
-    // ✅ Column order: Name, Integrations, 50 TXN, CSAT, Points, Training Completion
+    // Column order: Name, Integrations, 50 TXN, CSAT, Points, Training Completion
     const columnOrder = ["Name", "Integrations", "50 TXN", "CSAT", "Points", "Training Completion"];
 
     async function fetchTableData() {
@@ -129,7 +129,7 @@
           const tableHead = document.getElementById("table-head");
           const tableBody = document.getElementById("table-body");
 
-          // Convert points to numbers
+          // Convert Points to numbers
           data.forEach(row => {
             row.Points = Number(row.Points) || 0;
           });
