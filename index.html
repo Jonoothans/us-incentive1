@@ -109,8 +109,8 @@
     const TABLE_NAME = "us_incentive";
     const API_URL = `${SUPABASE_URL}/rest/v1/${TABLE_NAME}`;
 
-    // Desired column order
-    const columnOrder = ["Integrations", "50 TXN", "CSAT", "Points", "Training Completion"];
+    // ✅ Column order: Name, Integrations, 50 TXN, CSAT, Points, Training Completion
+    const columnOrder = ["Name", "Integrations", "50 TXN", "CSAT", "Points", "Training Completion"];
 
     async function fetchTableData() {
       try {
